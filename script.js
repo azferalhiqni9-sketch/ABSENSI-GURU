@@ -1,4 +1,5 @@
-addDoc, onSnapshot, query, orderBy, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
 
 // --- ISI DATA FIREBASE KAMU DI SINI ---
 const firebaseConfig = {
@@ -17,7 +18,6 @@ const colRef = collection(db, "absensi_guru");
 let dataAbsen = [];
 let selectedStatus = "";
 
-// Ambil data otomatis dari Firebase setiap ada perubahan
 onSnapshot(query(colRef, orderBy("timestamp", "desc")), (snapshot) => {
   dataAbsen = [];
   snapshot.forEach((doc) => {
@@ -57,7 +57,6 @@ async function kirimAbsensi() {
   errEl.style.display = "none";
   const { tanggal, waktu } = getNow();
 
-  // Simpan ke Firebase
   await addDoc(colRef, { nama, tanggal, waktu, status: selectedStatus, timestamp: new Date() });
 
   document.getElementById("res-nama").textContent = nama;
@@ -102,4 +101,29 @@ function doLogin() {
     document.getElementById("login-err").style.display = "block";
   }
 }
-// Tambahkan fungsi logout, eksporExcel, dll di sini sesuai kebutuhan...
+
+function doLogout() {
+  document.getElementById("inp-user").value = "";
+  document.getElementById("inp-pass").value = "";
+  showPage("page-form");
+}
+
+function eksporExcel() {
+  if (!dataAbsen.length) return alert("Tidak ada data.");
+  const rows = [["No", "Tanggal", "Waktu", "Nama Guru", "Status"]];
+  dataAbsen.forEach((r, i) => rows.push([i + 1, r.tanggal, r.waktu, r.nama, r.status]));
+  const ws = XLSX.utils.aoa_to_sheet(rows);
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, "Absensi");
+  XLSX.writeFile(wb, "Data_Absensi_Guru.xlsx");
+}
+
+// Menghubungkan fungsi ke tombol di HTML
+window.pilihStatus = pilihStatus;
+window.kirimAbsensi = kirimAbsensi;
+window.doLogin = doLogin;
+window.doLogout = doLogout;
+window.eksporExcel = eksporExcel;
+window.hapus = hapus;
+window.showPage = showPage;
+, dll di sini sesuai kebutuhan...
