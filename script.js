@@ -18,6 +18,7 @@ const colRef = collection(db, "absensi_guru");
 let dataAbsen = [];
 let selectedStatus = "";
 
+// Mengambil data real-time
 onSnapshot(query(colRef, orderBy("timestamp", "desc")), (snapshot) => {
   dataAbsen = [];
   snapshot.forEach((doc) => {
@@ -27,27 +28,20 @@ onSnapshot(query(colRef, orderBy("timestamp", "desc")), (snapshot) => {
   if (document.getElementById("stats-row")) renderStats();
 });
 
-function showPage(id) {
+// FUNGSI-FUNGSI YANG DIBUTUHKAN HTML
+window.showPage = function(id) {
   document.querySelectorAll(".page").forEach((p) => p.classList.remove("active"));
   document.getElementById(id).classList.add("active");
   window.scrollTo(0, 0);
-}
+};
 
-function pilihStatus(el, status) {
+window.pilihStatus = function(el, status) {
   document.querySelectorAll(".status-btn").forEach((b) => b.classList.remove("selected"));
   el.classList.add("selected");
   selectedStatus = status;
-}
+};
 
-function getNow() {
-  const now = new Date();
-  return { 
-    tanggal: now.toLocaleDateString('id-ID'), 
-    waktu: now.getHours() + "." + now.getMinutes().toString().padStart(2, '0') 
-  };
-}
-
-async function kirimAbsensi() {
+window.kirimAbsensi = async function() {
   const nama = document.getElementById("select-nama").value;
   const errEl = document.getElementById("form-err");
   if (!nama || !selectedStatus) {
@@ -55,18 +49,20 @@ async function kirimAbsensi() {
     return;
   }
   errEl.style.display = "none";
-  const { tanggal, waktu } = getNow();
+  const now = new Date();
+  
+  await addDoc(colRef, { 
+    nama, 
+    tanggal: now.toLocaleDateString('id-ID'), 
+    waktu: now.getHours() + "." + now.getMinutes().toString().padStart(2, '0'), 
+    status: selectedStatus, 
+    timestamp: now 
+  });
 
-  await addDoc(colRef, { nama, tanggal, waktu, status: selectedStatus, timestamp: new Date() });
+  window.showPage("page-berhasil");
+};
 
-  document.getElementById("res-nama").textContent = nama;
-  document.getElementById("res-tanggal").textContent = tanggal;
-  document.getElementById("res-waktu").textContent = waktu;
-  document.getElementById("res-status").textContent = selectedStatus.toUpperCase();
-  showPage("page-berhasil");
-}
-
-function renderStats() {
+window.renderStats = function() {
   const c = { hadir: 0, sakit: 0, izin: 0, alpa: 0 };
   dataAbsen.forEach(r => { if (c[r.status] !== undefined) c[r.status]++; });
   document.getElementById("stats-row").innerHTML = 
@@ -75,9 +71,9 @@ function renderStats() {
     `<div class="stat-card"><div class="stat-num">${c.sakit}</div><div class="stat-lbl">Sakit</div></div>` +
     `<div class="stat-card"><div class="stat-num">${c.izin}</div><div class="stat-lbl">Izin</div></div>` +
     `<div class="stat-card"><div class="stat-num">${c.alpa}</div><div class="stat-lbl">Alpa</div></div>`;
-}
+};
 
-function renderTable() {
+window.renderTable = function() {
   const q = document.getElementById("search-inp")?.value.toLowerCase() || "";
   const filtered = dataAbsen.filter((r) => r.nama.toLowerCase().includes(q));
   const tbody = document.getElementById("tbl-body");
@@ -85,30 +81,30 @@ function renderTable() {
     <tr>
       <td>${i + 1}</td><td>${r.tanggal}</td><td>${r.waktu}</td><td>${r.nama}</td>
       <td><span class="badge badge-${r.status}">${r.status.toUpperCase()}</span></td>
-      <td><button class="btn-hapus" onclick="hapus('${r.id}')">Hapus</button></td>
+      <td><button class="btn-hapus" onclick="window.hapus('${r.id}')">Hapus</button></td>
     </tr>`).join("") : '<tr><td colspan="6" class="empty-state">Data kosong.</td></tr>';
-}
+};
 
-async function hapus(id) {
+window.hapus = async function(id) {
   if (!confirm("Hapus data ini?")) return;
   await deleteDoc(doc(db, "absensi_guru", id));
-}
+};
 
-function doLogin() {
+window.doLogin = function() {
   if (document.getElementById("inp-user").value === "admin" && document.getElementById("inp-pass").value === "admin123") {
-    showPage("page-admin");
+    window.showPage("page-admin");
   } else {
     document.getElementById("login-err").style.display = "block";
   }
-}
+};
 
-function doLogout() {
+window.doLogout = function() {
   document.getElementById("inp-user").value = "";
   document.getElementById("inp-pass").value = "";
-  showPage("page-form");
-}
+  window.showPage("page-form");
+};
 
-function eksporExcel() {
+window.eksporExcel = function() {
   if (!dataAbsen.length) return alert("Tidak ada data.");
   const rows = [["No", "Tanggal", "Waktu", "Nama Guru", "Status"]];
   dataAbsen.forEach((r, i) => rows.push([i + 1, r.tanggal, r.waktu, r.nama, r.status]));
@@ -116,14 +112,5 @@ function eksporExcel() {
   const wb = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb, ws, "Absensi");
   XLSX.writeFile(wb, "Data_Absensi_Guru.xlsx");
-}
+};
 
-// Menghubungkan fungsi ke tombol di HTML
-window.pilihStatus = pilihStatus;
-window.kirimAbsensi = kirimAbsensi;
-window.doLogin = doLogin;
-window.doLogout = doLogout;
-window.eksporExcel = eksporExcel;
-window.hapus = hapus;
-window.showPage = showPage;
-, dll di sini sesuai kebutuhan...
