@@ -7,61 +7,18 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <!-- ===================== PAGE 1: FORM ABSENSI ===================== -->
     <div class="page active" id="page-form">
       <div class="phone-frame">
         <div class="guru-header">
-          <!-- Icon buku -->
           <div class="logo-circle">
-            <svg
-              viewBox="0 0 48 48"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M24 8C18 8 12 10 12 10V38C12 38 18 36 24 36C30 36 36 38 36 38V10C36 10 30 8 24 8Z"
-                fill="white"
-                opacity="0.9"
-              />
-              <line
-                x1="24"
-                y1="8"
-                x2="24"
-                y2="36"
-                stroke="#d4a017"
-                stroke-width="2"
-              />
-              <path
-                d="M16 15C18 14.5 20 14.3 22 14.4"
-                stroke="#d4a017"
-                stroke-width="1.5"
-                stroke-linecap="round"
-              />
-              <path
-                d="M16 20C18 19.5 20 19.3 22 19.4"
-                stroke="#d4a017"
-                stroke-width="1.5"
-                stroke-linecap="round"
-              />
-              <path
-                d="M26 15C28 14.5 30 14.3 32 14.4"
-                stroke="#d4a017"
-                stroke-width="1.5"
-                stroke-linecap="round"
-              />
-              <path
-                d="M26 20C28 19.5 30 19.3 32 19.4"
-                stroke="#d4a017"
-                stroke-width="1.5"
-                stroke-linecap="round"
-              />
-              <!-- Mahkota/pita -->
-              <path
-                d="M18 6L24 2L30 6"
-                fill="#f0c040"
-                stroke="#d4a017"
-                stroke-width="1"
-              />
+            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M24 8C18 8 12 10 12 10V38C12 38 18 36 24 36C30 36 36 38 36 38V10C36 10 30 8 24 8Z" fill="white" opacity="0.9"/>
+              <line x1="24" y1="8" x2="24" y2="36" stroke="#d4a017" stroke-width="2"/>
+              <path d="M16 15C18 14.5 20 14.3 22 14.4" stroke="#d4a017" stroke-width="1.5" stroke-linecap="round"/>
+              <path d="M16 20C18 19.5 20 19.3 22 19.4" stroke="#d4a017" stroke-width="1.5" stroke-linecap="round"/>
+              <path d="M26 15C28 14.5 30 14.3 32 14.4" stroke="#d4a017" stroke-width="1.5" stroke-linecap="round"/>
+              <path d="M26 20C28 19.5 30 19.3 32 19.4" stroke="#d4a017" stroke-width="1.5" stroke-linecap="round"/>
+              <path d="M18 6L24 2L30 6" fill="#f0c040" stroke="#d4a017" stroke-width="1"/>
             </svg>
           </div>
           <h1>ABSENSI GURU</h1>
@@ -70,346 +27,84 @@
 
         <div class="card-container">
           <p class="form-title">Form Absensi Guru</p>
-          <p class="form-sub">
-            Silahkan isi form di bawah ini untuk melakukan absensi
-          </p>
-
           <div class="field-group">
             <label class="field-label">Nama Guru <span>*</span></label>
-            <div class="select-wrap">
-              <span class="s-icon">
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="#aaa"
-                  stroke-width="2"
-                >
-                  <circle cx="12" cy="8" r="4" />
-                  <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
-                </svg>
-              </span>
-              <select id="select-nama">
-                <option value="">Pilih nama guru</option>
-                <option value="Didi Rusdyana">Didi Rusdyana</option>
-                <option value="Moch. Syahid S.H.I">Moch. Syahid S.H.I</option>
-                <option value="Anwar Hidayat S.S., S.S.I">
-                  Anwar Hidayat S.S., S.S.I
-                </option>
-                <option value="Eris Asyary S.Pd.I">Eris Asyary S.Pd.I</option>
-                <option value="Moch. Gunawan">Moch. Gunawan</option>
-                <option value="Nanang Nurhidayat">Nanang Nurhidayat</option>
-                <option value="Wandi">Wandi</option>
-                <option value="Rifal Saeful Wardani">
-                  Rifal Saeful Wardani
-                </option>
-                <option value="Jejen Zaenudin">Jejen Zaenudin</option>
-                <option value="Nurjaid Abdullah">Nurjaid Abdullah</option>
-                <option value="Neli Nurliah S.Pd">Neli Nurliah S.Pd</option>
-                <option value="Rini Astriani S.Pd.I">
-                  Rini Astriani S.Pd.I
-                </option>
-                <option value="Nuri Nuryani">Nuri Nuryani</option>
-                <option value="Ihsan Fahmi Lc">Ihsan Fahmi Lc</option>
-              </select>
-              <span class="s-arrow">
-                <svg
-                  width="12"
-                  height="12"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="#aaa"
-                  stroke-width="2.5"
-                >
-                  <path d="m6 9 6 6 6-6" />
-                </svg>
-              </span>
-            </div>
+            <select id="select-nama">
+              <option value="">Pilih nama guru</option>
+              <option value="Didi Rusdyana">Didi Rusdyana</option>
+              <option value="Moch. Syahid S.H.I">Moch. Syahid S.H.I</option>
+              <option value="Anwar Hidayat S.S., S.S.I">Anwar Hidayat S.S., S.S.I</option>
+              <option value="Eris Asyary S.Pd.I">Eris Asyary S.Pd.I</option>
+              <option value="Moch. Gunawan">Moch. Gunawan</option>
+              <option value="Nanang Nurhidayat">Nanang Nurhidayat</option>
+              <option value="Wandi">Wandi</option>
+              <option value="Rifal Saeful Wardani">Rifal Saeful Wardani</option>
+              <option value="Jejen Zaenudin">Jejen Zaenudin</option>
+              <option value="Nurjaid Abdullah">Nurjaid Abdullah</option>
+              <option value="Neli Nurliah S.Pd">Neli Nurliah S.Pd</option>
+              <option value="Rini Astriani S.Pd.I">Rini Astriani S.Pd.I</option>
+              <option value="Nuri Nuryani">Nuri Nuryani</option>
+              <option value="Ihsan Fahmi Lc">Ihsan Fahmi Lc</option>
+            </select>
           </div>
 
           <div class="field-group">
             <label class="field-label">Status <span>*</span></label>
             <div class="status-grid">
-              <button
-                class="status-btn hadir"
-                onclick="pilihStatus(this, 'hadir')"
-              >
-                <span class="dot dot-green"></span>Hadir
-              </button>
-              <button
-                class="status-btn izin"
-                onclick="pilihStatus(this, 'izin')"
-              >
-                <span class="dot dot-blue"></span>Izin
-              </button>
-              <button
-                class="status-btn sakit"
-                onclick="pilihStatus(this, 'sakit')"
-              >
-                <span class="dot dot-orange"></span>Sakit
-              </button>
-              <button
-                class="status-btn alpa"
-                onclick="pilihStatus(this, 'alpa')"
-              >
-                <span class="dot dot-red"></span>Alpa
-              </button>
+              <button class="status-btn hadir" onclick="window.pilihStatus(this, 'hadir')"><span class="dot dot-green"></span>Hadir</button>
+              <button class="status-btn izin" onclick="window.pilihStatus(this, 'izin')"><span class="dot dot-blue"></span>Izin</button>
+              <button class="status-btn sakit" onclick="window.pilihStatus(this, 'sakit')"><span class="dot dot-orange"></span>Sakit</button>
+              <button class="status-btn alpa" onclick="window.pilihStatus(this, 'alpa')"><span class="dot dot-red"></span>Alpa</button>
             </div>
           </div>
 
-          <div class="info-box">
-            <svg
-              width="18"
-              height="18"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="#999"
-              stroke-width="2"
-            >
-              <circle cx="12" cy="12" r="9" />
-              <path d="M12 7v5l3 3" />
-            </svg>
-            <span>Waktu akan tercatat otomatis saat anda mengirim form</span>
-          </div>
-
-          <p class="err-msg" id="form-err">
-            &#9888; Harap lengkapi semua field terlebih dahulu.
-          </p>
-
-          <button class="btn-primary" onclick="kirimAbsensi()">
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="#fff"
-              stroke-width="2.5"
-            >
-              <path d="M22 2 11 13" />
-              <path d="M22 2 15 22 11 13 2 9l20-7z" />
-            </svg>
-            KIRIM ABSENSI
-          </button>
-
+          <p class="err-msg" id="form-err">&#9888; Harap lengkapi semua field.</p>
+          <button class="btn-primary" onclick="window.kirimAbsensi()">KIRIM ABSENSI</button>
+          
           <div class="admin-link-wrap">
-            <button class="admin-link" onclick="showPage('page-login')">
-              <svg
-                width="14"
-                height="14"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="#888"
-                stroke-width="2"
-              >
-                <rect x="3" y="11" width="18" height="11" rx="2" />
-                <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-              </svg>
-              Login sebagai Admin
-            </button>
+            <button class="admin-link" onclick="window.showPage('page-login')">Login sebagai Admin</button>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- ===================== PAGE 2: BERHASIL ===================== -->
     <div class="page" id="page-berhasil">
       <div class="phone-frame">
         <div class="berhasil-wrap">
-          <div class="check-circle">
-            <svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" /></svg>
-          </div>
-          <p class="berhasil-title">Absensi Berhasil</p>
-          <p class="berhasil-sub">
-            Terima kasih, absensi Anda<br />telah tercatat
-          </p>
+          <p>Absensi Berhasil</p>
           <div class="info-card">
-            <div class="info-row">
-              <span class="lbl">Nama</span><span class="sep">:</span>
-              <span class="val" id="res-nama">—</span>
-            </div>
-            <div class="info-row">
-              <span class="lbl">Tanggal</span><span class="sep">:</span>
-              <span class="val" id="res-tanggal">—</span>
-            </div>
-            <div class="info-row">
-              <span class="lbl">Waktu</span><span class="sep">:</span>
-              <span class="val" id="res-waktu">—</span>
-            </div>
-            <div class="info-row">
-              <span class="lbl">Status</span><span class="sep">:</span>
-              <span class="val" id="res-status">—</span>
-            </div>
+            <div class="info-row"><span class="lbl">Nama</span><span class="val" id="res-nama">—</span></div>
+            <div class="info-row"><span class="lbl">Status</span><span class="val" id="res-status">—</span></div>
           </div>
-          <button class="btn-home" onclick="showPage('page-form')">Home</button>
+          <button class="btn-home" onclick="window.showPage('page-form')">Kembali</button>
         </div>
       </div>
     </div>
 
-    <!-- ===================== PAGE 3: LOGIN ADMIN ===================== -->
     <div class="page" id="page-login">
       <div class="login-wrap">
-        <div class="login-card">
-          <div class="login-header">
-            <div class="login-logo">
-              <svg viewBox="0 0 24 24">
-                <rect x="3" y="11" width="18" height="11" rx="2" />
-                <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-              </svg>
-            </div>
-            <h2>Admin Login</h2>
-            <p>Masuk untuk melihat data absensi guru</p>
-          </div>
-          <div class="input-group">
-            <label>Username</label>
-            <input
-              type="text"
-              id="inp-user"
-              placeholder="Masukkan username"
-              autocomplete="off"
-            />
-          </div>
-          <div class="input-group">
-            <label>Password</label>
-            <input
-              type="password"
-              id="inp-pass"
-              placeholder="Masukkan password"
-              onkeydown="if (event.key === 'Enter') doLogin();"
-            />
-          </div>
-          <p class="login-err" id="login-err">
-            &#9888; Username atau password salah.
-          </p>
-          <button class="btn-login" onclick="doLogin()">Masuk</button>
-          <div class="back-link">
-            <button onclick="showPage('page-form')">
-              &#8592; Kembali ke form absensi
-            </button>
-          </div>
-          <div class="demo-hint">
-            Login: username <b>admin</b> &nbsp;/&nbsp; password <b>admin123</b>
-          </div>
-        </div>
+        <input type="text" id="inp-user" placeholder="Username">
+        <input type="password" id="inp-pass" placeholder="Password">
+        <button class="btn-login" onclick="window.doLogin()">Masuk</button>
+        <button onclick="window.showPage('page-form')">Kembali</button>
       </div>
     </div>
 
-    <!-- ===================== PAGE 4: ADMIN DASHBOARD ===================== -->
     <div class="page" id="page-admin">
-      <nav class="admin-nav">
-        <div class="admin-brand">
-          <svg viewBox="0 0 24 24">
-            <rect x="3" y="3" width="7" height="7" rx="1" />
-            <rect x="14" y="3" width="7" height="7" rx="1" />
-            <rect x="3" y="14" width="7" height="7" rx="1" />
-            <rect x="14" y="14" width="7" height="7" rx="1" />
-          </svg>
-          Dashboard Absensi
-        </div>
-        <div class="nav-right">
-          <button class="btn-export" onclick="eksporExcel()">
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="#fff"
-              stroke-width="2.5"
-            >
-              <path
-                d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
-              />
-              <polyline points="14 2 14 8 20 8" />
-              <line x1="12" y1="18" x2="12" y2="12" />
-              <line x1="9" y1="15" x2="15" y2="15" />
-            </svg>
-            <span>Export Excel</span>
-          </button>
-          <button class="btn-clear-all" onclick="hapusSemua()">
-            <svg
-              width="14"
-              height="14"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="#fff"
-              stroke-width="2.5"
-            >
-              <polyline points="3 6 5 6 21 6" />
-              <path d="M19 6l-1 14H6L5 6" />
-              <path d="M10 11v6M14 11v6" />
-              <path d="M9 6V4h6v2" />
-            </svg>
-            <span>Hapus Semua</span>
-          </button>
-          <button class="btn-logout" onclick="doLogout()">
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="#fff"
-              stroke-width="2.5"
-            >
-              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
-              <polyline points="16 17 21 12 16 7" />
-              <line x1="21" y1="12" x2="9" y2="12" />
-            </svg>
-            <span>Keluar</span>
-          </button>
-        </div>
-      </nav>
-
       <div class="admin-body">
-        <p class="admin-title">Data Absensi Guru</p>
-
-        <div class="storage-banner">
-          <svg viewBox="0 0 24 24">
-            <path d="M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2z" />
-            <path d="M12 8v4l2 2" />
-          </svg>
-          <span
-            >Data tersimpan di <b>LocalStorage</b> — tidak akan hilang walau
-            halaman di-refresh atau ditutup.</span
-          >
-        </div>
-
-        <div class="stats-row" id="stats-row"></div>
-
-        <div class="action-row">
-          <input
-            class="search-inp"
-            type="text"
-            id="search-inp"
-            placeholder="&#128269; Cari nama guru..."
-            oninput="renderTable()"
-          />
-          <button
-            class="btn-reset"
-            onclick="
-              document.getElementById('search-inp').value = '';
-              renderTable();
-            "
-          >
-            Reset
-          </button>
-        </div>
-
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>No</th>
-                <th>Tanggal</th>
-                <th>Waktu</th>
-                <th>Nama Guru</th>
-                <th>Status</th>
-                <th>Aksi</th>
-              </tr>
-            </thead>
-            <tbody id="tbl-body"></tbody>
-          </table>
-        </div>
+        <button onclick="window.eksporExcel()">Export Excel</button>
+        <button onclick="window.doLogout()">Keluar</button>
+        <input type="text" id="search-inp" oninput="window.renderTable()" placeholder="Cari...">
+        <div id="stats-row"></div>
+        <table>
+          <thead><tr><th>No</th><th>Tanggal</th><th>Waktu</th><th>Nama</th><th>Status</th><th>Aksi</th></tr></thead>
+          <tbody id="tbl-body"></tbody>
+        </table>
       </div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-<script type="module" src="script.js"></script>
-
+    <script type="module" src="script.js"></script>
   </body>
-</html>
+      </html>
+                                                                 
