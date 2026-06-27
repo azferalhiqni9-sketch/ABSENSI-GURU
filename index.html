@@ -1,54 +1,485 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="id">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Absensi Guru - Baitul Muttaqin</title>
-    <<link rel="stylesheet" href="style.css?v=1.1" />
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Absensi Guru</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  body { font-family: 'Segoe UI', sans-serif; background: #f0f4f8; min-height: 100vh; }
 
-  </head>
-  <body>
-    <div class="page active" id="page-form">
-      <div class="phone-frame">
-        <div class="guru-header">
-          <div class="logo-circle">
-            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M24 8C18 8 12 10 12 10V38C12 38 18 36 24 36C30 36 36 38 36 38V10C36 10 30 8 24 8Z" fill="white" opacity="0.9"/>
-              <line x1="24" y1="8" x2="24" y2="36" stroke="#d4a017" stroke-width="2"/>
-              <path d="M16 15C18 14.5 20 14.3 22 14.4" stroke="#d4a017" stroke-width="1.5" stroke-linecap="round"/>
-              <path d="M16 20C18 19.5 20 19.3 22 19.4" stroke="#d4a017" stroke-width="1.5" stroke-linecap="round"/>
-              <path d="M26 15C28 14.5 30 14.3 32 14.4" stroke="#d4a017" stroke-width="1.5" stroke-linecap="round"/>
-              <path d="M26 20C28 19.5 30 19.3 32 19.4" stroke="#d4a017" stroke-width="1.5" stroke-linecap="round"/>
-              <path d="M18 6L24 2L30 6" fill="#f0c040" stroke="#d4a017" stroke-width="1"/>
-            </svg>
-          </div>
-          <h1>ABSENSI GURU</h1>
-          <p>BAITUL MUTTAQIN</p>
-        </div>
+  .page { display: none; }
+  .page.active { display: block; }
 
-        <div class="card-container">
-          <p class="form-title">Form Absensi Guru</p>
-          <div class="field-group">
-            <label class="field-label">Nama Guru <span>*</span></label>
-            <select id="select-nama">
-              <option value="">Pilih nama guru</option>
-              <option value="Didi Rusdyana">Didi Rusdyana</option>
-              <option value="Moch. Syahid S.H.I">Moch. Syahid S.H.I</option>
-              <option value="Anwar Hidayat S.S., S.S.I">Anwar Hidayat S.S., S.S.I</option>
-              <option value="Eris Asyary S.Pd.I">Eris Asyary S.Pd.I</option>
-              <option value="Moch. Gunawan">Moch. Gunawan</option>
-              <option value="Nanang Nurhidayat">Nanang Nurhidayat</option>
-              <option value="Wandi">Wandi</option>
-              <option value="Rifal Saeful Wardani">Rifal Saeful Wardani</option>
-              <option value="Jejen Zaenudin">Jejen Zaenudin</option>
-              <option value="Nurjaid Abdullah">Nurjaid Abdullah</option>
-              <option value="Neli Nurliah S.Pd">Neli Nurliah S.Pd</option>
-              <option value="Rini Astriani S.Pd.I">Rini Astriani S.Pd.I</option>
-              <option value="Nuri Nuryani">Nuri Nuryani</option>
-              <option value="Ihsan Fahmi Lc">Ihsan Fahmi Lc</option>
-            </select>
-          </div>
+  .header { background: #1a73e8; color: white; padding: 18px 20px; text-align: center; }
+  .header h1 { font-size: 20px; font-weight: 700; }
+  .header p { font-size: 13px; opacity: 0.85; margin-top: 4px; }
 
+  .card { background: white; border-radius: 16px; padding: 20px; margin: 16px; box-shadow: 0 2px 10px rgba(0,0,0,0.08); }
+  .card h2 { font-size: 16px; color: #333; margin-bottom: 18px; font-weight: 700; }
+
+  label { display: block; font-size: 14px; color: #555; margin-bottom: 8px; font-weight: 600; }
+
+  select, input[type=text], input[type=password] {
+    width: 100%;
+    padding: 16px;
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    font-size: 16px;
+    color: #333;
+    background: #fafafa;
+    margin-bottom: 18px;
+    appearance: none;
+    -webkit-appearance: none;
+    min-height: 56px;
+  }
+  select:focus, input:focus { outline: none; border-color: #1a73e8; background: white; }
+
+  .select-wrap { position: relative; margin-bottom: 0; }
+  .select-wrap select { margin-bottom: 18px; }
+  .select-wrap::after {
+    content: '▾'; position: absolute; right: 16px; top: 18px;
+    color: #888; pointer-events: none; font-size: 18px;
+  }
+
+  /* STATUS BUTTONS — big & touch-friendly */
+  .status-group { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 22px; }
+  .status-btn {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 0; height: 80px;
+    border: 3px solid #ddd; border-radius: 16px;
+    background: white; font-weight: 700; cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+    user-select: none; touch-action: manipulation;
+  }
+  .status-btn .icon { font-size: 26px; margin-bottom: 4px; }
+  .status-btn .lbl  { font-size: 15px; }
+  .status-btn.hadir { border-color: #4caf50; color: #4caf50; }
+  .status-btn.alpa  { border-color: #f44336; color: #f44336; }
+  .status-btn.izin  { border-color: #ff9800; color: #ff9800; }
+  .status-btn.sakit { border-color: #2196f3; color: #2196f3; }
+  .status-btn.hadir.selected { background: #4caf50; color: white; }
+  .status-btn.alpa.selected  { background: #f44336; color: white; }
+  .status-btn.izin.selected  { background: #ff9800; color: white; }
+  .status-btn.sakit.selected { background: #2196f3; color: white; }
+
+  /* MAIN BUTTONS */
+  .btn {
+    display: block; width: 100%;
+    padding: 18px; margin-bottom: 12px;
+    border: none; border-radius: 14px;
+    font-size: 17px; font-weight: 700; text-align: center;
+    cursor: pointer; user-select: none; touch-action: manipulation;
+    min-height: 58px; letter-spacing: 0.2px;
+  }
+  .btn:active { filter: brightness(0.9); }
+  .btn-primary { background: #1a73e8; color: white; }
+  .btn-outline  { background: white; color: #1a73e8; border: 2.5px solid #1a73e8; }
+  .btn-success  { background: #4caf50; color: white; }
+  .btn-danger   { background: #f44336; color: white; }
+  .btn-excel    { background: #217346; color: white; }
+  .btn-print    { background: #555; color: white; }
+
+  /* TOAST */
+  #toast {
+    position: fixed; bottom: 36px; left: 50%; transform: translateX(-50%);
+    background: #222; color: white; padding: 14px 28px;
+    border-radius: 30px; font-size: 14px; font-weight: 600;
+    opacity: 0; transition: opacity 0.3s; z-index: 999; white-space: nowrap;
+    pointer-events: none;
+  }
+  #toast.show { opacity: 1; }
+
+  /* ADMIN NAV */
+  .admin-nav { display: flex; background: white; border-bottom: 1px solid #eee; }
+  .admin-nav button {
+    flex: 1; padding: 14px 4px; border: none; background: none;
+    font-size: 12px; color: #888; cursor: pointer;
+    border-bottom: 3px solid transparent; touch-action: manipulation;
+    font-weight: 600;
+  }
+  .admin-nav button.active { color: #1a73e8; border-bottom-color: #1a73e8; }
+
+  /* STATS */
+  .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 0 16px 16px; }
+  .stat-card { background: white; border-radius: 14px; padding: 18px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.07); }
+  .stat-card .num { font-size: 32px; font-weight: 800; }
+  .stat-card .lbl { font-size: 13px; color: #888; margin-top: 4px; }
+  .stat-hadir { color: #4caf50; } .stat-alpa { color: #f44336; }
+  .stat-izin  { color: #ff9800; } .stat-sakit { color: #2196f3; }
+
+  /* TABLE */
+  .tbl-wrap { overflow-x: auto; margin: 0 16px 16px; }
+  table { width: 100%; border-collapse: collapse; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.07); font-size: 13px; }
+  th { background: #1a73e8; color: white; padding: 12px 10px; text-align: left; font-weight: 700; }
+  td { padding: 11px 10px; border-bottom: 1px solid #f0f0f0; color: #333; }
+  tr:last-child td { border-bottom: none; }
+  tr:nth-child(even) td { background: #fafafa; }
+  .badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; }
+  .badge-hadir { background: #e8f5e9; color: #2e7d32; }
+  .badge-alpa  { background: #ffebee; color: #c62828; }
+  .badge-izin  { background: #fff3e0; color: #e65100; }
+  .badge-sakit { background: #e3f2fd; color: #1565c0; }
+
+  /* LOGIN */
+  .login-wrap {
+    min-height: 100vh; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; padding: 24px;
+    background: linear-gradient(135deg, #1a73e8, #0d47a1);
+  }
+  .login-box { background: white; border-radius: 20px; padding: 32px 24px; width: 100%; max-width: 380px; box-shadow: 0 8px 32px rgba(0,0,0,0.2); }
+  .login-box h2 { text-align: center; color: #333; margin-bottom: 24px; font-size: 20px; font-weight: 700; }
+  .login-logo { text-align: center; font-size: 48px; margin-bottom: 12px; }
+
+  .filter-row { display: flex; gap: 10px; margin: 0 16px 12px; }
+  .filter-row select { margin-bottom: 0; flex: 1; }
+  .empty { text-align: center; padding: 30px; color: #aaa; font-size: 14px; }
+  .tab-section { display: none; }
+  .tab-section.active { display: block; }
+</style>
+</head>
+<body>
+
+<!-- PAGE: ABSENSI -->
+<div id="page-absensi" class="page active">
+  <div class="header">
+    <h1>📋 Absensi Guru</h1>
+    <p id="tanggal-hari"></p>
+  </div>
+  <div class="card">
+    <h2>Form Absensi</h2>
+    <label>Nama Guru</label>
+    <div class="select-wrap">
+      <select id="nama-guru">
+        <option value="">-- Pilih Nama Guru --</option>
+      </select>
+    </div>
+
+    <label>Status Kehadiran</label>
+    <div class="status-group">
+      <button class="status-btn hadir" id="btn-hadir">
+        <span class="icon">✅</span><span class="lbl">Hadir</span>
+      </button>
+      <button class="status-btn alpa" id="btn-alpa">
+        <span class="icon">❌</span><span class="lbl">Alpa</span>
+      </button>
+      <button class="status-btn izin" id="btn-izin">
+        <span class="icon">📝</span><span class="lbl">Izin</span>
+      </button>
+      <button class="status-btn sakit" id="btn-sakit">
+        <span class="icon">🏥</span><span class="lbl">Sakit</span>
+      </button>
+    </div>
+
+    <label>Keterangan (opsional)</label>
+    <input type="text" id="keterangan" placeholder="Tambahkan keterangan...">
+
+    <button class="btn btn-primary" id="btn-kirim">📤 Kirim Absensi</button>
+    <button class="btn btn-outline" id="btn-ke-admin">🔐 Login Admin</button>
+  </div>
+</div>
+
+<!-- PAGE: LOGIN ADMIN -->
+<div id="page-login-admin" class="page">
+  <div class="login-wrap">
+    <div class="login-box">
+      <div class="login-logo">🔐</div>
+      <h2>Login Admin</h2>
+      <label>Username</label>
+      <input type="text" id="admin-user" placeholder="Username" autocomplete="off">
+      <label>Password</label>
+      <input type="password" id="admin-pass" placeholder="Password">
+      <button class="btn btn-primary" id="btn-masuk">Masuk</button>
+      <button class="btn btn-outline" id="btn-balik">← Kembali</button>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE: ADMIN -->
+<div id="page-admin" class="page">
+  <div class="header">
+    <h1>⚙️ Dashboard Admin</h1>
+    <p>Sistem Absensi Guru</p>
+  </div>
+  <div class="admin-nav">
+    <button class="active" data-tab="dashboard">📊 Dashboard</button>
+    <button data-tab="rekap">📋 Rekap</button>
+    <button data-tab="ekspor">📤 Ekspor</button>
+    <button data-tab="pengaturan">⚙️ Guru</button>
+  </div>
+
+  <!-- DASHBOARD -->
+  <div id="tab-dashboard" class="tab-section active">
+    <div class="card" style="margin-bottom:12px"><h2>Rekap Hari Ini</h2></div>
+    <div class="stats-grid">
+      <div class="stat-card"><div class="num stat-hadir" id="cnt-hadir">0</div><div class="lbl">Hadir</div></div>
+      <div class="stat-card"><div class="num stat-alpa"  id="cnt-alpa">0</div><div class="lbl">Alpa</div></div>
+      <div class="stat-card"><div class="num stat-izin"  id="cnt-izin">0</div><div class="lbl">Izin</div></div>
+      <div class="stat-card"><div class="num stat-sakit" id="cnt-sakit">0</div><div class="lbl">Sakit</div></div>
+    </div>
+    <div class="tbl-wrap">
+      <table><thead><tr><th>Nama Guru</th><th>Status</th><th>Waktu</th></tr></thead>
+      <tbody id="tbody-hari-ini"><tr><td colspan="3" class="empty">Belum ada absensi hari ini</td></tr></tbody></table>
+    </div>
+    <div style="margin:0 16px 20px">
+      <button class="btn btn-danger" id="btn-logout">🚪 Logout</button>
+    </div>
+  </div>
+
+  <!-- REKAP -->
+  <div id="tab-rekap" class="tab-section">
+    <div class="filter-row">
+      <select id="filter-bulan"></select>
+      <select id="filter-tahun"></select>
+    </div>
+    <div style="margin:0 16px 12px">
+      <button class="btn btn-primary" id="btn-tampilkan">Tampilkan</button>
+    </div>
+    <div class="tbl-wrap">
+      <table><thead><tr><th>Tanggal</th><th>Nama</th><th>Status</th><th>Ket.</th></tr></thead>
+      <tbody id="tbody-rekap"><tr><td colspan="4" class="empty">Pilih bulan lalu tampilkan</td></tr></tbody></table>
+    </div>
+  </div>
+
+  <!-- EKSPOR -->
+  <div id="tab-ekspor" class="tab-section">
+    <div class="card">
+      <h2>📤 Ekspor Laporan</h2>
+      <label>Bulan</label>
+      <div class="select-wrap"><select id="ekspor-bulan"></select></div>
+      <label>Tahun</label>
+      <div class="select-wrap"><select id="ekspor-tahun"></select></div>
+      <button class="btn btn-excel" id="btn-excel">📊 Download Excel</button>
+      <button class="btn btn-print" id="btn-print">🖨️ Print Laporan</button>
+    </div>
+  </div>
+
+  <!-- PENGATURAN -->
+  <div id="tab-pengaturan" class="tab-section">
+    <div class="card">
+      <h2>⚙️ Daftar Nama Guru</h2>
+      <div id="list-guru-admin"></div>
+      <input type="text" id="input-guru-baru" placeholder="Nama guru baru...">
+      <button class="btn btn-success" id="btn-tambah-guru">+ Tambah Guru</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getDatabase, ref, push, onValue, set, get } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+const app = initializeApp({
+  apiKey: "AIzaSyCgGa6Opzhhmgym-dDMQsnqpVE5C5PcFZM",
+  authDomain: "absensi-sekolah-2d07b.firebaseapp.com",
+  databaseURL: "https://absensi-sekolah-2d07b-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "absensi-sekolah-2d07b",
+  storageBucket: "absensi-sekolah-2d07b.firebasestorage.app",
+  messagingSenderId: "64572792075",
+  appId: "1:64572792075:web:0b0e4bb4ef45b93c2c160e"
+});
+const db = getDatabase(app);
+
+// ── STATE ──
+let selectedStatus = '';
+let allAbsensi = {};
+let daftarGuru = [];
+
+// ── HELPERS ──
+const BULAN = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+function today() {
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
+function fmtWaktu(ts) {
+  const d = new Date(ts);
+  return `${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
+}
+function badge(s) {
+  const c = {Hadir:'hadir',Alpa:'alpa',Izin:'izin',Sakit:'sakit'}[s]||'';
+  return `<span class="badge badge-${c}">${s}</span>`;
+}
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2800);
+}
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+}
+
+// ── TAP HELPER (fixes iOS onclick delay) ──
+function onTap(el, fn) {
+  if (!el) return;
+  let moved = false;
+  el.addEventListener('touchstart', () => { moved = false; }, { passive: true });
+  el.addEventListener('touchmove',  () => { moved = true;  }, { passive: true });
+  el.addEventListener('touchend', e => {
+    if (!moved) { e.preventDefault(); fn(); }
+  });
+  el.addEventListener('click', fn); // fallback for desktop
+}
+
+// ── PAGE NAV ──
+onTap(document.getElementById('btn-ke-admin'), () => showPage('page-login-admin'));
+onTap(document.getElementById('btn-balik'),    () => showPage('page-absensi'));
+onTap(document.getElementById('btn-logout'),   () => { showPage('page-absensi'); toast('👋 Logout berhasil!'); });
+
+// ── STATUS BUTTONS ──
+['hadir','alpa','izin','sakit'].forEach(s => {
+  onTap(document.getElementById('btn-'+s), () => {
+    selectedStatus = s.charAt(0).toUpperCase() + s.slice(1);
+    document.querySelectorAll('.status-btn').forEach(b => b.classList.remove('selected'));
+    document.getElementById('btn-'+s).classList.add('selected');
+  });
+});
+
+// ── TANGGAL HEADER ──
+const d = new Date();
+document.getElementById('tanggal-hari').textContent =
+  `${ ['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'][d.getDay()] }, ${d.getDate()} ${BULAN[d.getMonth()]} ${d.getFullYear()}`;
+
+// ── INIT DROPDOWN TAHUN & BULAN ──
+function initSelects() {
+  const yr = new Date().getFullYear();
+  const mo = new Date().getMonth();
+  ['filter-bulan','ekspor-bulan'].forEach(id => {
+    const el = document.getElementById(id);
+    el.innerHTML = BULAN.map((b,i) => `<option value="${i}">${b}</option>`).join('');
+    el.value = mo;
+  });
+  ['filter-tahun','ekspor-tahun'].forEach(id => {
+    const el = document.getElementById(id);
+    el.innerHTML = '';
+    for (let y=yr; y>=yr-3; y--) el.innerHTML += `<option>${y}</option>`;
+  });
+}
+initSelects();
+
+// ── GURU ──
+onValue(ref(db,'guru'), snap => {
+  const data = snap.val() || {};
+  daftarGuru = Object.values(data);
+  if (!daftarGuru.length) daftarGuru = [
+    'Didi Rusdyana','Moch. Syahid S.H.I','Anwar Hidayat S.S, S.S.I','Eris Asyary S.Pd.I',
+    'Moch. Gunawan','Nanang Nurhidayat','Wandi','Rifal Saeful Wardani',
+    'Jejen Zaenudin','Nurjaid Abdullah','Neli Nurliah S.Pd','Rini Astriani S.Pd.I',
+    'Nuri Nuryani','Ihsan Fahmi Lc'
+  ];
+  const sel = document.getElementById('nama-guru');
+  sel.innerHTML = '<option value="">-- Pilih Nama Guru --</option>' +
+    daftarGuru.map(g => `<option>${g}</option>`).join('');
+  renderGuruAdmin();
+});
+
+function simpanGuru() {
+  const obj = {}; daftarGuru.forEach((g,i) => obj[i]=g);
+  set(ref(db,'guru'), obj);
+}
+function renderGuruAdmin() {
+  const el = document.getElementById('list-guru-admin');
+  if (!el) return;
+  el.innerHTML = daftarGuru.map((g,i) =>
+    `<div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #f0f0f0">
+      <span style="font-size:15px">${g}</span>
+      <button data-i="${i}" class="hapus-guru" style="background:#ffebee;color:#c62828;border:none;border-radius:8px;padding:8px 14px;font-size:13px;font-weight:700;cursor:pointer;touch-action:manipulation">Hapus</button>
+    </div>`
+  ).join('');
+  document.querySelectorAll('.hapus-guru').forEach(btn => {
+    onTap(btn, () => {
+      if (!confirm('Hapus guru ini?')) return;
+      daftarGuru.splice(+btn.dataset.i, 1);
+      simpanGuru(); toast('🗑️ Guru dihapus.');
+    });
+  });
+}
+onTap(document.getElementById('btn-tambah-guru'), () => {
+  const inp = document.getElementById('input-guru-baru');
+  const nama = inp.value.trim();
+  if (!nama) { toast('⚠️ Nama tidak boleh kosong!'); return; }
+  daftarGuru.push(nama); simpanGuru(); inp.value='';
+  toast('✅ Guru ditambahkan!');
+});
+
+// ── ABSENSI REALTIME ──
+onValue(ref(db,'absensi'), snap => {
+  allAbsensi = snap.val() || {};
+  renderDashboard();
+});
+function renderDashboard() {
+  const data = allAbsensi[today()] ? Object.values(allAbsensi[today()]) : [];
+  data.sort((a,b) => a.timestamp-b.timestamp);
+  const cnt = {Hadir:0,Alpa:0,Izin:0,Sakit:0};
+  data.forEach(a => { if(cnt[a.status]!==undefined) cnt[a.status]++; });
+  ['Hadir','Alpa','Izin','Sakit'].forEach(s =>
+    document.getElementById('cnt-'+s.toLowerCase()).textContent = cnt[s]);
+  const tbody = document.getElementById('tbody-hari-ini');
+  tbody.innerHTML = data.length
+    ? data.map(a => `<tr><td>${a.nama}</td><td>${badge(a.status)}</td><td>${fmtWaktu(a.timestamp)}</td></tr>`).join('')
+    : '<tr><td colspan="3" class="empty">Belum ada absensi hari ini</td></tr>';
+}
+
+// ── KIRIM ABSENSI ──
+onTap(document.getElementById('btn-kirim'), async () => {
+  const nama = document.getElementById('nama-guru').value;
+  const ket  = document.getElementById('keterangan').value.trim();
+  if (!nama)           { toast('⚠️ Pilih nama guru dulu!'); return; }
+  if (!selectedStatus) { toast('⚠️ Pilih status kehadiran!'); return; }
+  const snap = await get(ref(db, `absensi/${today()}`));
+  if (snap.exists()) {
+    const sudah = Object.values(snap.val()).find(a => a.nama===nama);
+    if (sudah) { toast(`⚠️ ${nama} sudah absen hari ini!`); return; }
+  }
+  await push(ref(db, `absensi/${today()}`), { nama, status: selectedStatus, keterangan: ket, timestamp: Date.now() });
+  toast(`✅ Absensi ${nama} berhasil!`);
+  document.getElementById('nama-guru').value='';
+  document.getElementById('keterangan').value='';
+  selectedStatus='';
+  document.querySelectorAll('.status-btn').forEach(b=>b.classList.remove('selected'));
+});
+
+// ── LOGIN ADMIN ──
+onTap(document.getElementById('btn-masuk'), () => {
+  const u = document.getElementById('admin-user').value;
+  const p = document.getElementById('admin-pass').value;
+  if (u==='admin' && p==='admin123') {
+    showPage('page-admin'); renderDashboard(); renderGuruAdmin(); toast('✅ Login berhasil!');
+  } else { toast('❌ Username/password salah!'); }
+});
+
+// ── ADMIN TABS ──
+document.querySelectorAll('.admin-nav button').forEach(btn => {
+  onTap(btn, () => {
+    document.querySelectorAll('.admin-nav button').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.tab-section').forEach(t=>t.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-'+btn.dataset.tab).classList.add('active');
+    if (btn.dataset.tab==='pengaturan') renderGuruAdmin();
+  });
+});
+
+// ── REKAP ──
+onTap(document.getElementById('btn-tampilkan'), () => {
+  const bulan = +document.getElementById('filter-bulan').value;
+  const tahun = +document.getElementById('filter-tahun').value;
+  const prefix = `${tahun}-${String(bulan+1).padStart(2,'0')}`;
+  let rows = [];
+  Object.keys(allAbsensi).forEach(tgl => {
+    if (!tgl.startsWith(prefix)) return;
+    Object.values(allAbsensi[tgl]).forEach(a => rows.push({tgl,...a}));
+  });
+  rows.sort((a,b)=>a.timestamp-b.timestamp);
+  const tbody = document.getElementById('tbody-rekap');
+  tbody.innerHTML = rows.length
+    ? rows.map(r=>`<tr><td>${r.tgl}</td><td>${r.nama}</td><td>${badge(r.status)}</td><td>${r.keterangan||'-'}</td></tr>`).join('')
+    : '<tr><td colspan="4" class="empty">Tidak ada data bulan ini</td></tr>';
+});
+
+// ── EK
           <div class="field-group">
             <label class="field-label">Status <span>*</span></label>
             <div class="status-grid">
