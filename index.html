@@ -7,53 +7,31 @@
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
   body { font-family: 'Segoe UI', sans-serif; background: #f0f4f8; min-height: 100vh; }
-
-  .page { display: none; }
-  .page.active { display: block; }
-
+  .page { display: none; } .page.active { display: block; }
   .header { background: #1a73e8; color: white; padding: 18px 20px; text-align: center; }
   .header h1 { font-size: 20px; font-weight: 700; }
   .header p { font-size: 13px; opacity: 0.85; margin-top: 4px; }
-
   .card { background: white; border-radius: 16px; padding: 20px; margin: 16px; box-shadow: 0 2px 10px rgba(0,0,0,0.08); }
   .card h2 { font-size: 16px; color: #333; margin-bottom: 18px; font-weight: 700; }
-
   label { display: block; font-size: 14px; color: #555; margin-bottom: 8px; font-weight: 600; }
-
   select, input[type=text], input[type=password] {
-    width: 100%;
-    padding: 16px;
-    border: 2px solid #ddd;
-    border-radius: 12px;
-    font-size: 16px;
-    color: #333;
-    background: #fafafa;
-    margin-bottom: 18px;
-    appearance: none;
-    -webkit-appearance: none;
-    min-height: 56px;
+    width: 100%; padding: 16px; border: 2px solid #ddd; border-radius: 12px;
+    font-size: 16px; color: #333; background: #fafafa; margin-bottom: 18px;
+    appearance: none; -webkit-appearance: none; min-height: 56px;
   }
   select:focus, input:focus { outline: none; border-color: #1a73e8; background: white; }
-
-  .select-wrap { position: relative; margin-bottom: 0; }
+  .select-wrap { position: relative; }
   .select-wrap select { margin-bottom: 18px; }
-  .select-wrap::after {
-    content: '▾'; position: absolute; right: 16px; top: 18px;
-    color: #888; pointer-events: none; font-size: 18px;
-  }
-
-  /* STATUS BUTTONS — big & touch-friendly */
+  .select-wrap::after { content: '▾'; position: absolute; right: 16px; top: 18px; color: #888; pointer-events: none; font-size: 18px; }
   .status-group { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 22px; }
   .status-btn {
     display: flex; flex-direction: column; align-items: center; justify-content: center;
-    padding: 0; height: 80px;
-    border: 3px solid #ddd; border-radius: 16px;
+    height: 80px; border: 3px solid #ddd; border-radius: 16px;
     background: white; font-weight: 700; cursor: pointer;
-    transition: background 0.15s, border-color 0.15s;
     user-select: none; touch-action: manipulation;
   }
   .status-btn .icon { font-size: 26px; margin-bottom: 4px; }
-  .status-btn .lbl  { font-size: 15px; }
+  .status-btn .lbl { font-size: 15px; }
   .status-btn.hadir { border-color: #4caf50; color: #4caf50; }
   .status-btn.alpa  { border-color: #f44336; color: #f44336; }
   .status-btn.izin  { border-color: #ff9800; color: #ff9800; }
@@ -62,15 +40,10 @@
   .status-btn.alpa.selected  { background: #f44336; color: white; }
   .status-btn.izin.selected  { background: #ff9800; color: white; }
   .status-btn.sakit.selected { background: #2196f3; color: white; }
-
-  /* MAIN BUTTONS */
   .btn {
-    display: block; width: 100%;
-    padding: 18px; margin-bottom: 12px;
-    border: none; border-radius: 14px;
-    font-size: 17px; font-weight: 700; text-align: center;
-    cursor: pointer; user-select: none; touch-action: manipulation;
-    min-height: 58px; letter-spacing: 0.2px;
+    display: block; width: 100%; padding: 18px; margin-bottom: 12px;
+    border: none; border-radius: 14px; font-size: 17px; font-weight: 700;
+    text-align: center; cursor: pointer; user-select: none; touch-action: manipulation; min-height: 58px;
   }
   .btn:active { filter: brightness(0.9); }
   .btn-primary { background: #1a73e8; color: white; }
@@ -79,36 +52,26 @@
   .btn-danger   { background: #f44336; color: white; }
   .btn-excel    { background: #217346; color: white; }
   .btn-print    { background: #555; color: white; }
-
-  /* TOAST */
   #toast {
     position: fixed; bottom: 36px; left: 50%; transform: translateX(-50%);
-    background: #222; color: white; padding: 14px 28px;
-    border-radius: 30px; font-size: 14px; font-weight: 600;
-    opacity: 0; transition: opacity 0.3s; z-index: 999; white-space: nowrap;
-    pointer-events: none;
+    background: #222; color: white; padding: 14px 28px; border-radius: 30px;
+    font-size: 14px; font-weight: 600; opacity: 0; transition: opacity 0.3s;
+    z-index: 999; white-space: nowrap; pointer-events: none;
   }
   #toast.show { opacity: 1; }
-
-  /* ADMIN NAV */
   .admin-nav { display: flex; background: white; border-bottom: 1px solid #eee; }
   .admin-nav button {
-    flex: 1; padding: 14px 4px; border: none; background: none;
-    font-size: 12px; color: #888; cursor: pointer;
-    border-bottom: 3px solid transparent; touch-action: manipulation;
-    font-weight: 600;
+    flex: 1; padding: 14px 4px; border: none; background: none; font-size: 12px;
+    color: #888; cursor: pointer; border-bottom: 3px solid transparent;
+    touch-action: manipulation; font-weight: 600;
   }
   .admin-nav button.active { color: #1a73e8; border-bottom-color: #1a73e8; }
-
-  /* STATS */
   .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 0 16px 16px; }
   .stat-card { background: white; border-radius: 14px; padding: 18px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.07); }
   .stat-card .num { font-size: 32px; font-weight: 800; }
   .stat-card .lbl { font-size: 13px; color: #888; margin-top: 4px; }
   .stat-hadir { color: #4caf50; } .stat-alpa { color: #f44336; }
   .stat-izin  { color: #ff9800; } .stat-sakit { color: #2196f3; }
-
-  /* TABLE */
   .tbl-wrap { overflow-x: auto; margin: 0 16px 16px; }
   table { width: 100%; border-collapse: collapse; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.07); font-size: 13px; }
   th { background: #1a73e8; color: white; padding: 12px 10px; text-align: left; font-weight: 700; }
@@ -120,27 +83,18 @@
   .badge-alpa  { background: #ffebee; color: #c62828; }
   .badge-izin  { background: #fff3e0; color: #e65100; }
   .badge-sakit { background: #e3f2fd; color: #1565c0; }
-
-  /* LOGIN */
-  .login-wrap {
-    min-height: 100vh; display: flex; flex-direction: column;
-    align-items: center; justify-content: center; padding: 24px;
-    background: linear-gradient(135deg, #1a73e8, #0d47a1);
-  }
+  .login-wrap { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 24px; background: linear-gradient(135deg, #1a73e8, #0d47a1); }
   .login-box { background: white; border-radius: 20px; padding: 32px 24px; width: 100%; max-width: 380px; box-shadow: 0 8px 32px rgba(0,0,0,0.2); }
   .login-box h2 { text-align: center; color: #333; margin-bottom: 24px; font-size: 20px; font-weight: 700; }
   .login-logo { text-align: center; font-size: 48px; margin-bottom: 12px; }
-
   .filter-row { display: flex; gap: 10px; margin: 0 16px 12px; }
   .filter-row select { margin-bottom: 0; flex: 1; }
   .empty { text-align: center; padding: 30px; color: #aaa; font-size: 14px; }
-  .tab-section { display: none; }
-  .tab-section.active { display: block; }
+  .tab-section { display: none; } .tab-section.active { display: block; }
 </style>
 </head>
 <body>
 
-<!-- PAGE: ABSENSI -->
 <div id="page-absensi" class="page active">
   <div class="header">
     <h1>📋 Absensi Guru</h1>
@@ -150,36 +104,22 @@
     <h2>Form Absensi</h2>
     <label>Nama Guru</label>
     <div class="select-wrap">
-      <select id="nama-guru">
-        <option value="">-- Pilih Nama Guru --</option>
-      </select>
+      <select id="nama-guru"><option value="">-- Pilih Nama Guru --</option></select>
     </div>
-
     <label>Status Kehadiran</label>
     <div class="status-group">
-      <button class="status-btn hadir" id="btn-hadir">
-        <span class="icon">✅</span><span class="lbl">Hadir</span>
-      </button>
-      <button class="status-btn alpa" id="btn-alpa">
-        <span class="icon">❌</span><span class="lbl">Alpa</span>
-      </button>
-      <button class="status-btn izin" id="btn-izin">
-        <span class="icon">📝</span><span class="lbl">Izin</span>
-      </button>
-      <button class="status-btn sakit" id="btn-sakit">
-        <span class="icon">🏥</span><span class="lbl">Sakit</span>
-      </button>
+      <button class="status-btn hadir" id="btn-hadir"><span class="icon">✅</span><span class="lbl">Hadir</span></button>
+      <button class="status-btn alpa"  id="btn-alpa"><span class="icon">❌</span><span class="lbl">Alpa</span></button>
+      <button class="status-btn izin"  id="btn-izin"><span class="icon">📝</span><span class="lbl">Izin</span></button>
+      <button class="status-btn sakit" id="btn-sakit"><span class="icon">🏥</span><span class="lbl">Sakit</span></button>
     </div>
-
     <label>Keterangan (opsional)</label>
     <input type="text" id="keterangan" placeholder="Tambahkan keterangan...">
-
     <button class="btn btn-primary" id="btn-kirim">📤 Kirim Absensi</button>
     <button class="btn btn-outline" id="btn-ke-admin">🔐 Login Admin</button>
   </div>
 </div>
 
-<!-- PAGE: LOGIN ADMIN -->
 <div id="page-login-admin" class="page">
   <div class="login-wrap">
     <div class="login-box">
@@ -195,20 +135,14 @@
   </div>
 </div>
 
-<!-- PAGE: ADMIN -->
 <div id="page-admin" class="page">
-  <div class="header">
-    <h1>⚙️ Dashboard Admin</h1>
-    <p>Sistem Absensi Guru</p>
-  </div>
+  <div class="header"><h1>⚙️ Dashboard Admin</h1><p>Sistem Absensi Guru</p></div>
   <div class="admin-nav">
     <button class="active" data-tab="dashboard">📊 Dashboard</button>
     <button data-tab="rekap">📋 Rekap</button>
     <button data-tab="ekspor">📤 Ekspor</button>
     <button data-tab="pengaturan">⚙️ Guru</button>
   </div>
-
-  <!-- DASHBOARD -->
   <div id="tab-dashboard" class="tab-section active">
     <div class="card" style="margin-bottom:12px"><h2>Rekap Hari Ini</h2></div>
     <div class="stats-grid">
@@ -221,27 +155,19 @@
       <table><thead><tr><th>Nama Guru</th><th>Status</th><th>Waktu</th></tr></thead>
       <tbody id="tbody-hari-ini"><tr><td colspan="3" class="empty">Belum ada absensi hari ini</td></tr></tbody></table>
     </div>
-    <div style="margin:0 16px 20px">
-      <button class="btn btn-danger" id="btn-logout">🚪 Logout</button>
-    </div>
+    <div style="margin:0 16px 20px"><button class="btn btn-danger" id="btn-logout">🚪 Logout</button></div>
   </div>
-
-  <!-- REKAP -->
   <div id="tab-rekap" class="tab-section">
     <div class="filter-row">
       <select id="filter-bulan"></select>
       <select id="filter-tahun"></select>
     </div>
-    <div style="margin:0 16px 12px">
-      <button class="btn btn-primary" id="btn-tampilkan">Tampilkan</button>
-    </div>
+    <div style="margin:0 16px 12px"><button class="btn btn-primary" id="btn-tampilkan">Tampilkan</button></div>
     <div class="tbl-wrap">
       <table><thead><tr><th>Tanggal</th><th>Nama</th><th>Status</th><th>Ket.</th></tr></thead>
       <tbody id="tbody-rekap"><tr><td colspan="4" class="empty">Pilih bulan lalu tampilkan</td></tr></tbody></table>
     </div>
   </div>
-
-  <!-- EKSPOR -->
   <div id="tab-ekspor" class="tab-section">
     <div class="card">
       <h2>📤 Ekspor Laporan</h2>
@@ -253,8 +179,6 @@
       <button class="btn btn-print" id="btn-print">🖨️ Print Laporan</button>
     </div>
   </div>
-
-  <!-- PENGATURAN -->
   <div id="tab-pengaturan" class="tab-section">
     <div class="card">
       <h2>⚙️ Daftar Nama Guru</h2>
@@ -267,28 +191,43 @@
 
 <div id="toast"></div>
 
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getDatabase, ref, push, onValue, set, get } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+<script>
+// ── FIREBASE REST API ──
+const DB = "https://absensi-sekolah-2d07b-default-rtdb.asia-southeast1.firebasedatabase.app";
 
-const app = initializeApp({
-  apiKey: "AIzaSyCgGa6Opzhhmgym-dDMQsnqpVE5C5PcFZM",
-  authDomain: "absensi-sekolah-2d07b.firebaseapp.com",
-  databaseURL: "https://absensi-sekolah-2d07b-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "absensi-sekolah-2d07b",
-  storageBucket: "absensi-sekolah-2d07b.firebasestorage.app",
-  messagingSenderId: "64572792075",
-  appId: "1:64572792075:web:0b0e4bb4ef45b93c2c160e"
-});
-const db = getDatabase(app);
+async function fbGet(path) {
+  try {
+    const r = await fetch(`${DB}/${path}.json`);
+    return await r.json();
+  } catch(e) { return null; }
+}
+async function fbSet(path, data) {
+  try {
+    await fetch(`${DB}/${path}.json`, { method: 'PUT', body: JSON.stringify(data), headers: {'Content-Type':'application/json'} });
+  } catch(e) {}
+}
+async function fbPush(path, data) {
+  try {
+    const r = await fetch(`${DB}/${path}.json`, { method: 'POST', body: JSON.stringify(data), headers: {'Content-Type':'application/json'} });
+    return await r.json();
+  } catch(e) { return null; }
+}
+function fbListen(path, cb) {
+  async function poll() {
+    const d = await fbGet(path);
+    cb(d);
+  }
+  poll();
+  setInterval(poll, 4000);
+}
 
 // ── STATE ──
 let selectedStatus = '';
 let allAbsensi = {};
 let daftarGuru = [];
 
-// ── HELPERS ──
 const BULAN = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+
 function today() {
   const d = new Date();
   return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
@@ -311,39 +250,20 @@ function showPage(id) {
   document.getElementById(id).classList.add('active');
   window.scrollTo(0,0);
 }
-
-// ── TAP HELPER (fixes iOS onclick delay) ──
 function onTap(el, fn) {
   if (!el) return;
   let moved = false;
   el.addEventListener('touchstart', () => { moved = false; }, { passive: true });
   el.addEventListener('touchmove',  () => { moved = true;  }, { passive: true });
-  el.addEventListener('touchend', e => {
-    if (!moved) { e.preventDefault(); fn(); }
-  });
-  el.addEventListener('click', fn); // fallback for desktop
+  el.addEventListener('touchend', e => { if (!moved) { e.preventDefault(); fn(); } });
+  el.addEventListener('click', fn);
 }
 
-// ── PAGE NAV ──
-onTap(document.getElementById('btn-ke-admin'), () => showPage('page-login-admin'));
-onTap(document.getElementById('btn-balik'),    () => showPage('page-absensi'));
-onTap(document.getElementById('btn-logout'),   () => { showPage('page-absensi'); toast('👋 Logout berhasil!'); });
-
-// ── STATUS BUTTONS ──
-['hadir','alpa','izin','sakit'].forEach(s => {
-  onTap(document.getElementById('btn-'+s), () => {
-    selectedStatus = s.charAt(0).toUpperCase() + s.slice(1);
-    document.querySelectorAll('.status-btn').forEach(b => b.classList.remove('selected'));
-    document.getElementById('btn-'+s).classList.add('selected');
-  });
-});
-
-// ── TANGGAL HEADER ──
+// ── INIT ──
 const d = new Date();
 document.getElementById('tanggal-hari').textContent =
-  `${ ['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'][d.getDay()] }, ${d.getDate()} ${BULAN[d.getMonth()]} ${d.getFullYear()}`;
+  `${['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'][d.getDay()]}, ${d.getDate()} ${BULAN[d.getMonth()]} ${d.getFullYear()}`;
 
-// ── INIT DROPDOWN TAHUN & BULAN ──
 function initSelects() {
   const yr = new Date().getFullYear();
   const mo = new Date().getMonth();
@@ -361,25 +281,27 @@ function initSelects() {
 initSelects();
 
 // ── GURU ──
-onValue(ref(db,'guru'), snap => {
-  const data = snap.val() || {};
-  daftarGuru = Object.values(data);
-  if (!daftarGuru.length) daftarGuru = [
-    'Didi Rusdyana','Moch. Syahid S.H.I','Anwar Hidayat S.S, S.S.I','Eris Asyary S.Pd.I',
-    'Moch. Gunawan','Nanang Nurhidayat','Wandi','Rifal Saeful Wardani',
-    'Jejen Zaenudin','Nurjaid Abdullah','Neli Nurliah S.Pd','Rini Astriani S.Pd.I',
-    'Nuri Nuryani','Ihsan Fahmi Lc'
-  ];
+const DEFAULT_GURU = [
+  'Didi Rusdyana','Moch. Syahid S.H.I','Anwar Hidayat S.S, S.S.I','Eris Asyary S.Pd.I',
+  'Moch. Gunawan','Nanang Nurhidayat','Wandi','Rifal Saeful Wardani',
+  'Jejen Zaenudin','Nurjaid Abdullah','Neli Nurliah S.Pd','Rini Astriani S.Pd.I',
+  'Nuri Nuryani','Ihsan Fahmi Lc'
+];
+
+async function loadGuru() {
+  const data = await fbGet('guru');
+  daftarGuru = data ? Object.values(data) : DEFAULT_GURU;
+  if (!daftarGuru.length) daftarGuru = DEFAULT_GURU;
+  updateDropdownGuru();
+  renderGuruAdmin();
+}
+
+function updateDropdownGuru() {
   const sel = document.getElementById('nama-guru');
   sel.innerHTML = '<option value="">-- Pilih Nama Guru --</option>' +
     daftarGuru.map(g => `<option>${g}</option>`).join('');
-  renderGuruAdmin();
-});
-
-function simpanGuru() {
-  const obj = {}; daftarGuru.forEach((g,i) => obj[i]=g);
-  set(ref(db,'guru'), obj);
 }
+
 function renderGuruAdmin() {
   const el = document.getElementById('list-guru-admin');
   if (!el) return;
@@ -397,19 +319,22 @@ function renderGuruAdmin() {
     });
   });
 }
-onTap(document.getElementById('btn-tambah-guru'), () => {
-  const inp = document.getElementById('input-guru-baru');
-  const nama = inp.value.trim();
-  if (!nama) { toast('⚠️ Nama tidak boleh kosong!'); return; }
-  daftarGuru.push(nama); simpanGuru(); inp.value='';
-  toast('✅ Guru ditambahkan!');
-});
 
-// ── ABSENSI REALTIME ──
-onValue(ref(db,'absensi'), snap => {
-  allAbsensi = snap.val() || {};
+async function simpanGuru() {
+  const obj = {}; daftarGuru.forEach((g,i) => obj[i]=g);
+  await fbSet('guru', obj);
+  updateDropdownGuru();
+  renderGuruAdmin();
+}
+
+loadGuru();
+
+// ── ABSENSI POLLING ──
+fbListen('absensi', data => {
+  allAbsensi = data || {};
   renderDashboard();
 });
+
 function renderDashboard() {
   const data = allAbsensi[today()] ? Object.values(allAbsensi[today()]) : [];
   data.sort((a,b) => a.timestamp-b.timestamp);
@@ -423,26 +348,43 @@ function renderDashboard() {
     : '<tr><td colspan="3" class="empty">Belum ada absensi hari ini</td></tr>';
 }
 
-// ── KIRIM ABSENSI ──
+// ── NAV ──
+onTap(document.getElementById('btn-ke-admin'), () => showPage('page-login-admin'));
+onTap(document.getElementById('btn-balik'),    () => showPage('page-absensi'));
+onTap(document.getElementById('btn-logout'),   () => { showPage('page-absensi'); toast('👋 Logout!'); });
+
+// ── STATUS ──
+['hadir','alpa','izin','sakit'].forEach(s => {
+  onTap(document.getElementById('btn-'+s), () => {
+    selectedStatus = s.charAt(0).toUpperCase()+s.slice(1);
+    document.querySelectorAll('.status-btn').forEach(b=>b.classList.remove('selected'));
+    document.getElementById('btn-'+s).classList.add('selected');
+  });
+});
+
+// ── KIRIM ──
 onTap(document.getElementById('btn-kirim'), async () => {
   const nama = document.getElementById('nama-guru').value;
   const ket  = document.getElementById('keterangan').value.trim();
   if (!nama)           { toast('⚠️ Pilih nama guru dulu!'); return; }
   if (!selectedStatus) { toast('⚠️ Pilih status kehadiran!'); return; }
-  const snap = await get(ref(db, `absensi/${today()}`));
-  if (snap.exists()) {
-    const sudah = Object.values(snap.val()).find(a => a.nama===nama);
+  const snap = await fbGet(`absensi/${today()}`);
+  if (snap) {
+    const sudah = Object.values(snap).find(a => a.nama===nama);
     if (sudah) { toast(`⚠️ ${nama} sudah absen hari ini!`); return; }
   }
-  await push(ref(db, `absensi/${today()}`), { nama, status: selectedStatus, keterangan: ket, timestamp: Date.now() });
+  await fbPush(`absensi/${today()}`, { nama, status: selectedStatus, keterangan: ket, timestamp: Date.now() });
   toast(`✅ Absensi ${nama} berhasil!`);
   document.getElementById('nama-guru').value='';
   document.getElementById('keterangan').value='';
   selectedStatus='';
   document.querySelectorAll('.status-btn').forEach(b=>b.classList.remove('selected'));
+  const newData = await fbGet('absensi');
+  allAbsensi = newData || {};
+  renderDashboard();
 });
 
-// ── LOGIN ADMIN ──
+// ── LOGIN ──
 onTap(document.getElementById('btn-masuk'), () => {
   const u = document.getElementById('admin-user').value;
   const p = document.getElementById('admin-pass').value;
@@ -462,6 +404,15 @@ document.querySelectorAll('.admin-nav button').forEach(btn => {
   });
 });
 
+// ── TAMBAH GURU ──
+onTap(document.getElementById('btn-tambah-guru'), () => {
+  const inp = document.getElementById('input-guru-baru');
+  const nama = inp.value.trim();
+  if (!nama) { toast('⚠️ Nama tidak boleh kosong!'); return; }
+  daftarGuru.push(nama); simpanGuru(); inp.value='';
+  toast('✅ Guru ditambahkan!');
+});
+
 // ── REKAP ──
 onTap(document.getElementById('btn-tampilkan'), () => {
   const bulan = +document.getElementById('filter-bulan').value;
@@ -479,64 +430,44 @@ onTap(document.getElementById('btn-tampilkan'), () => {
     : '<tr><td colspan="4" class="empty">Tidak ada data bulan ini</td></tr>';
 });
 
-// ── EK
-          <div class="field-group">
-            <label class="field-label">Status <span>*</span></label>
-            <div class="status-grid">
-              <button class="status-btn hadir" onclick="window.pilihStatus(this, 'hadir')"><span class="dot dot-green"></span>Hadir</button>
-              <button class="status-btn izin" onclick="window.pilihStatus(this, 'izin')"><span class="dot dot-blue"></span>Izin</button>
-              <button class="status-btn sakit" onclick="window.pilihStatus(this, 'sakit')"><span class="dot dot-orange"></span>Sakit</button>
-              <button class="status-btn alpa" onclick="window.pilihStatus(this, 'alpa')"><span class="dot dot-red"></span>Alpa</button>
-            </div>
-          </div>
+// ── EXCEL ──
+onTap(document.getElementById('btn-excel'), () => {
+  const bulan = +document.getElementById('ekspor-bulan').value;
+  const tahun = +document.getElementById('ekspor-tahun').value;
+  const prefix = `${tahun}-${String(bulan+1).padStart(2,'0')}`;
+  let rows = [['Tanggal','Nama Guru','Status','Keterangan','Waktu']];
+  Object.keys(allAbsensi).sort().forEach(tgl => {
+    if (!tgl.startsWith(prefix)) return;
+    Object.values(allAbsensi[tgl]).forEach(a => rows.push([tgl,a.nama,a.status,a.keterangan||'-',fmtWaktu(a.timestamp)]));
+  });
+  if (rows.length===1) { toast('⚠️ Tidak ada data!'); return; }
+  const csv = '\uFEFF' + rows.map(r=>r.map(c=>`"${c}"`).join(',')).join('\n');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8;'}));
+  a.download = `Absensi_${BULAN[bulan]}_${tahun}.csv`;
+  a.click(); toast('✅ File diunduh!');
+});
 
-          <p class="err-msg" id="form-err">&#9888; Harap lengkapi semua field.</p>
-          <button class="btn-primary" onclick="window.kirimAbsensi()">KIRIM ABSENSI</button>
-          
-          <div class="admin-link-wrap">
-            <button class="admin-link" onclick="window.showPage('page-login')">Login sebagai Admin</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="page" id="page-berhasil">
-      <div class="phone-frame">
-        <div class="berhasil-wrap">
-          <p>Absensi Berhasil</p>
-          <div class="info-card">
-            <div class="info-row"><span class="lbl">Nama</span><span class="val" id="res-nama">—</span></div>
-            <div class="info-row"><span class="lbl">Status</span><span class="val" id="res-status">—</span></div>
-          </div>
-          <button class="btn-home" onclick="window.showPage('page-form')">Kembali</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="page" id="page-login">
-      <div class="login-wrap">
-        <input type="text" id="inp-user" placeholder="Username">
-        <input type="password" id="inp-pass" placeholder="Password">
-        <button class="btn-login" onclick="window.doLogin()">Masuk</button>
-        <button onclick="window.showPage('page-form')">Kembali</button>
-      </div>
-    </div>
-
-    <div class="page" id="page-admin">
-      <div class="admin-body">
-        <button onclick="window.eksporExcel()">Export Excel</button>
-        <button onclick="window.doLogout()">Keluar</button>
-        <input type="text" id="search-inp" oninput="window.renderTable()" placeholder="Cari...">
-        <div id="stats-row"></div>
-        <table>
-          <thead><tr><th>No</th><th>Tanggal</th><th>Waktu</th><th>Nama</th><th>Status</th><th>Aksi</th></tr></thead>
-          <tbody id="tbl-body"></tbody>
-        </table>
-      </div>
-    </div>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-    <script type="module" src="script.js"></script>
-  </body>
-      </html>
-                                                                 
+// ── PRINT ──
+onTap(document.getElementById('btn-print'), () => {
+  const bulan = +document.getElementById('ekspor-bulan').value;
+  const tahun = +document.getElementById('ekspor-tahun').value;
+  const prefix = `${tahun}-${String(bulan+1).padStart(2,'0')}`;
+  let rows = [];
+  Object.keys(allAbsensi).sort().forEach(tgl => {
+    if (!tgl.startsWith(prefix)) return;
+    Object.values(allAbsensi[tgl]).forEach(a => rows.push({tgl,...a}));
+  });
+  if (!rows.length) { toast('⚠️ Tidak ada data!'); return; }
+  const win = window.open('','_blank');
+  win.document.write(`<html><head><title>Laporan</title>
+    <style>body{font-family:Arial;padding:20px;font-size:12px}h2,p{text-align:center}table{width:100%;border-collapse:collapse;margin-top:16px}th,td{border:1px solid #ccc;padding:7px 8px;text-align:left}th{background:#1a73e8;color:#fff}tr:nth-child(even)td{background:#f5f5f5}</style>
+    </head><body><h2>Laporan Absensi Guru</h2><p>${BULAN[bulan]} ${tahun}</p>
+    <table><thead><tr><th>No</th><th>Tanggal</th><th>Nama Guru</th><th>Status</th><th>Keterangan</th><th>Waktu</th></tr></thead>
+    <tbody>${rows.map((r,i)=>`<tr><td>${i+1}</td><td>${r.tgl}</td><td>${r.nama}</td><td>${r.status}</td><td>${r.keterangan||'-'}</td><td>${fmtWaktu(r.timestamp)}</td></tr>`).join('')}</tbody>
+    </table><script>window.print();<\/script></body></html>`);
+  win.document.close();
+});
+</script>
+</body>
+</html>
